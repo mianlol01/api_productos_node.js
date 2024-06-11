@@ -22,13 +22,15 @@ Instalación:
 -Clonar este repositorio
 
 -Instalar dependencias, requiere node.js
-  npm install
+
+  $npm install
   
 -Crear la base de datos(bd.txt), sql server necesario
 
 -Configurar los atributos de la conexión en connection.js
 
 -Ejecutar el servidor
-  node server.js
+
+  $node server.js
   
 -Probar las endpoints
