@@ -1,6 +1,6 @@
-Simple api para gestionar simples productos
+# Simple api para gestionar simples productos
 
-Endpoints
+## Endpoints
 
 Crear un producto, requiere body: nombre, cantidad, precio
 
@@ -40,7 +40,7 @@ Ejemplo
     ]
 }
 
-Instalación:
+## Instalación:
 
 -Clonar este repositorio
 
