@@ -4,39 +4,39 @@
 
 Crear un producto, requiere body: nombre, cantidad, precio
 
-### "/crearProducto"
+### `/crearProducto`
 
 Obtener todos los productos
 
-### "/Productos"
+### `/Productos`
 
 Obtener un producto por ID
 
-### "/Producto/:id"
+### `/Producto/:id`
 
 Editar un producto por ID, requiere body: nombre, cantidad, precio
 
-### "/editarProducto/:id"
+### `/editarProducto/:id`
 
 Eliminar un producto por ID(luego de eliminar dicho producto, su id quedará inutilizable, nose, así es sql server)
 
-### "/eliminarProducto/:id"
+### `/eliminarProducto/:id`
 
 Obtener todas las categorias
 
-### "/Categoria/:id"
+### `/Categoria/:id`
 
 Crear un pedido(requiere body: id_cliente, productos[{id,cantidad}])
 
-### "/crearPedido"
+### `/crearPedido`
 
 Obtener todos los pedidos de un Cliente
 
-### "/Pedidos/Cliente/:idCliente"
+### `/Pedidos/Cliente/:idCliente`
 
 Obtener un Pedido por su id
 
-### "/Pedido/:idPedido"
+### `/Pedido/:idPedido`
 
 Ejemplo
 {
