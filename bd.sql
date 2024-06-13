@@ -115,7 +115,7 @@ BEGIN
     SELECT @id_pedido AS id_pedido;
 END;
 
---Ejemplo de como usar el Procedimineto para crear un Pedido
+--Ejemplo de como usar el Procedimiento para crear un Pedido
 -- Declarar una variable de tipo tabla
 --DECLARE @productosPedido dbo.Detalle_PedidoTipo;
 
@@ -126,3 +126,89 @@ END;
 
 -- Llamar al procedimiento almacenado
 --EXEC InsertarPedidoConProductos @id_cliente = 2, @productosPedido = @productosPedido;
+
+--Obtener todos los pedidos de un Cliente
+CREATE PROCEDURE ObtenerPedidosPorCliente
+    @idCliente INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        P.id_pedido,
+        P.id_cliente,
+        C.nombre AS nombre_cliente,
+        C.apellido AS apellido_cliente,
+        (
+            SELECT 
+                PR.nombre AS nombre_producto,
+                DP.cantidad,
+                PR.precio_unitario,
+                (DP.cantidad * DP.precio) AS precio_total
+            FROM 
+                Detalle_Pedido DP
+            INNER JOIN 
+                Producto PR ON DP.id_producto = PR.id
+            WHERE 
+                DP.id_pedido = P.id_pedido
+            FOR JSON PATH
+        ) AS productos,
+        (
+            SELECT 
+                SUM(DP.cantidad * DP.precio) 
+            FROM 
+                Detalle_Pedido DP
+            WHERE 
+                DP.id_pedido = P.id_pedido
+        ) AS importe_total
+    FROM 
+        Pedido P
+    INNER JOIN 
+        Cliente C ON P.id_cliente = C.id_cliente
+    WHERE 
+        P.id_cliente = @idCliente
+    FOR JSON PATH, ROOT('Pedidos');
+END
+
+--Obtener un los detalles de un Pedido
+CREATE PROCEDURE ObtenerDetallePedido
+    @id_pedido INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        P.id_pedido,
+        P.id_cliente,
+        C.nombre AS nombre_cliente,
+        C.apellido AS apellido_cliente,
+        (
+            SELECT 
+                PR.nombre AS nombre_producto,
+                DP.cantidad,
+                PR.precio_unitario,
+                (DP.cantidad * DP.precio) AS precio_total
+            FROM 
+                Detalle_Pedido DP
+            INNER JOIN 
+                Producto PR ON DP.id_producto = PR.id
+            WHERE 
+                DP.id_pedido = P.id_pedido
+            FOR JSON PATH
+        ) AS productos,
+        (
+            SELECT 
+                SUM(DP.cantidad * DP.precio) 
+            FROM 
+                Detalle_Pedido DP
+            WHERE 
+                DP.id_pedido = P.id_pedido
+        ) AS importe_total
+    FROM 
+        Pedido P
+    INNER JOIN 
+        Cliente C ON P.id_cliente = C.id_cliente
+    WHERE 
+        P.id_pedido = @id_pedido
+    FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
+END

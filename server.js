@@ -42,3 +42,9 @@ app.get("/Categoria/:id", categoriaController.obtenerCategoria);
 
 // Endpoint para crear un nuevo registro en la tabla Pedido(requiere body: id_cliente, productos[{id, cantidad}])
 app.post("/crearPedido", pedidoController.crearPedido);
+
+// Endpoint para listar los pedidos de un Cliente
+app.get('/Pedidos/Cliente/:idCliente', pedidoController.listarPedidosCliente)
+
+// Endpoint para llamar al procedimiento almacenado
+app.get('/Pedido/:idPedido', pedidoController.obtenerPedido)
